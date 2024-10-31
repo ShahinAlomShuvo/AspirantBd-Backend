@@ -7,7 +7,7 @@ const notFound = (req: Request, res: Response, next: NextFunction) => {
   res.status(httpStatus.NOT_FOUND).json({
     success: false,
     status: httpStatus.NOT_FOUND,
-    message: "Not Found",
+    message: "Route Not Found",
   });
 };
 

@@ -9,8 +9,7 @@ import jwt from "jsonwebtoken";
 const signUp = async (user: TUser) => {
   const isExist = await existingUser(user.email);
   if (isExist) {
-    //   throw new AppError(httpStatus.BAD_REQUEST, "User already exist");
-    throw new Error("User already exist");
+    throw new AppError(httpStatus.BAD_REQUEST, "User already exist");
   }
   const newUser = await UserModel.create(user);
   const result = await UserModel.findById(newUser._id).select("-password");
@@ -28,7 +27,7 @@ const signIn = async (payload: TSignIn) => {
     throw new AppError(httpStatus.BAD_REQUEST, "Invalid email or password");
   }
 
-  const isMatch = comparePassword(payload.password, existingUser.password);
+  const isMatch = comparePassword(payload?.password, existingUser.password);
   if (!isMatch) {
     throw new AppError(httpStatus.BAD_REQUEST, "Invalid email or password");
   }
@@ -37,7 +36,7 @@ const signIn = async (payload: TSignIn) => {
   const { password, ...jwtPayload } = existingUser.toJSON();
 
   const accessToken = jwt.sign(jwtPayload, config.JWT_ACCESS_SECRET as string, {
-    expiresIn: config.JWT_REFRESH_EXPIRE_IN,
+    expiresIn: config.JWT_ACCESS_EXPIRE_IN,
   });
 
   const refreshToken = jwt.sign(
