@@ -9,8 +9,6 @@ export enum Provider {
   LOCAL = "local",
   GOOGLE = "google",
   FACEBOOK = "facebook",
-  TWITTER = "twitter",
-  GITHUB = "github",
 }
 
 export type TUser = {

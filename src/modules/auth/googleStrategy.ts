@@ -1,7 +1,7 @@
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import config from "../../config";
-import { Role, TUser } from "../user/user.interface";
+import { Provider, Role, TUser } from "../user/user.interface";
 import UserModel from "../user/user.model";
 import { NextFunction, Request, Response } from "express";
 
@@ -24,9 +24,8 @@ passport.use(
           avatar:
             profile.photos && profile.photos[0] && profile.photos[0].value,
           role: Role.USER,
-          password: "",
-          phone: "",
-          address: "",
+          provider: Provider.GOOGLE,
+          providerId: profile.id,
         };
 
         // Check if the user exists in the database

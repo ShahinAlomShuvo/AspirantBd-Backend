@@ -1,15 +1,19 @@
 import { authController } from "./auth.controller";
 import validateRequest from "../../middleware/validateRequest.middleware";
-import { userValidationSchema } from "../user/user.validation";
+
 import passport from "passport";
 import { Router } from "express";
 import { ensureAuthenticated } from "./googleStrategy";
+import { userValidation } from "../user/user.validation";
 
 const router = Router();
 
 router.post(
   "/signup",
-  // validateRequest(userValidationSchema),
+  validateRequest(
+    userValidation.localUserValidationSchema,
+    userValidation.externalProviderUserValidationSchema
+  ),
   authController.signUp
 );
 

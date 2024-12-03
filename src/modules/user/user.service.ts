@@ -5,6 +5,12 @@ const getAllUsers = async () => {
   return users;
 };
 
+const getAuthUser = async (id: string) => {
+  const user = await UserModel.findById(id).select("-password");
+  return user;
+};
+
 export const userService = {
   getAllUsers,
+  getAuthUser,
 };

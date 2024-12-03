@@ -18,8 +18,18 @@ const userSchema = new Schema<TUser>(
         return this.provider === Provider.LOCAL;
       },
     },
-    phone: { type: String },
-    address: { type: String },
+    phone: {
+      type: String,
+      required: function () {
+        return this.provider === Provider.LOCAL;
+      },
+    },
+    address: {
+      type: String,
+      required: function () {
+        return this.provider === Provider.LOCAL;
+      },
+    },
     avatar: { type: String },
     provider: {
       type: String,

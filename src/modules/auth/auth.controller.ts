@@ -3,9 +3,7 @@ import sendResponse from "../../utils/sendResponse.utils";
 import httpStatus from "http-status";
 import { authService } from "./auth.service";
 import config from "../../config";
-import passport from "passport";
 import { Request, Response } from "express";
-import { TUser } from "../user/user.interface";
 
 const signUp = catchAsync(async (req, res) => {
   const userData = req.body;
@@ -38,12 +36,8 @@ const signIn = catchAsync(async (req, res) => {
   });
 });
 
-const googleSignIn = passport.authenticate("google", {
-  scope: ["profile", "email"],
-});
-
 const handleGoogleSignIn = catchAsync(async (req, res) => {
-  res.redirect("http://localhost:5173");
+  res.redirect(config.CLIENT_URL as string);
 });
 
 const logOut = (req: Request, res: Response) => {
@@ -60,7 +54,6 @@ const logOut = (req: Request, res: Response) => {
 
 const getAuthUser = catchAsync(async (req, res) => {
   const user = req.user;
-
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -72,7 +65,6 @@ const getAuthUser = catchAsync(async (req, res) => {
 export const authController = {
   signUp,
   signIn,
-  googleSignIn,
   handleGoogleSignIn,
   logOut,
   getAuthUser,
